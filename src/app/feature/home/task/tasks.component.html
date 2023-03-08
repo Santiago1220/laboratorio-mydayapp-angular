@@ -1,0 +1,23 @@
+
+<section>
+  <ul class="todo-list">
+    <li
+      *ngFor="let task of tasks$ | async; let i = index"
+      (dblclick)="editTask(task.id)"
+      (keydown.esc)="removeEditMode()"
+      [class.editing]="task.id === editing"
+      [class.completed]="task.completed && task.id !== editing">
+      <div class="view">
+        <input [id]="i" class="toggle" type="checkbox" [checked]="task.completed" (change)="check(task.id)" />
+        <label>{{task.title}}</label>
+        <button class="destroy" (click)="deleteTask(task)"></button>
+      </div>
+      <input
+        class="edit"
+        [value]="task.title.trim()"
+        autofocus
+        #newTitleTask
+        (keyup.enter)="changeTaskTitle(newTitleTask, task.id)" />
+    </li>
+  </ul>
+</section>
